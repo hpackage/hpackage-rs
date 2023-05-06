@@ -21,7 +21,9 @@ jobs:
         id: pr
         uses: peter-evans/create-pull-request@v5
         with:
+          token: ${{secrets.PR_CREATION}}
           title: Update submodules
+          author: GitHub <noreply@github.com>
           commit-message: Update submodules
           labels: dependencies
       - name: Approve and automerge PR
