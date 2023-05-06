@@ -26,4 +26,3 @@ jobs:
         run: gh pr merge --auto --rebase "$PR_URL"
         env:
           PR_URL: ${{github.event.pull_request.html_url}}
-          MODULE: ${{steps.metadata.outputs.dependency-names}}

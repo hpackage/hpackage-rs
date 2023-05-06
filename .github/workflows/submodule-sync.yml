@@ -1,0 +1,33 @@
+on:
+  repository_dispatch:
+    types: ["sync-schema"]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: recursive
+      - name: Update references
+        run: git submodule update --remote --recursive
+      - name: Open PR
+        id: pr
+        uses: peter-evans/create-pull-request@v5
+        with:
+          title: Update submodules
+          commit-message: Update submodules
+          delete-branch: true
+          labels: dependencies
+      - name: Approve and automerge PR
+        # only actually approve and merge if we actually made a PR
+        if: ${{steps.pr.outputs.pull-request-url}}
+        run: |
+          gh pr review --approve "$PR_URL"
+          gh gh pr merge --auto --rebase "$PR_URL"
+        env:
+          PR_URL: ${{steps.pr.outputs.pull-request-url}}
