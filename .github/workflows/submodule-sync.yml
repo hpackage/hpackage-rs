@@ -23,14 +23,13 @@ jobs:
         with:
           title: Update submodules
           commit-message: Update submodules
-          delete-branch: true
           labels: dependencies
       - name: Approve and automerge PR
         # only actually approve and merge if we actually made a PR
         if: ${{steps.pr.outputs.pull-request-url}}
         run: |
-          gh pr review --approve "$PR_URL"
           gh pr merge --auto --rebase "$PR_URL"
+          gh pr review --approve "$PR_URL"
         env:
           PR_URL: ${{steps.pr.outputs.pull-request-url}}
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
