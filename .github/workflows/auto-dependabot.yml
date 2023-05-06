@@ -1,4 +1,4 @@
-name: Dependabot Auto-Approve
+name: Dependabot Auto-merge
 on: pull_request
 
 permissions:
@@ -20,9 +20,9 @@ jobs:
           PR_URL: ${{github.event.pull_request.html_url}}
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
       - name: Auto merge
-        # auto merges PRs for submodules
-        if: ${{steps.metadata.outputs.package-ecosystem == 'gitsubmodule'}}
-        run: gh pr merge --auto --merge "$PR_URL" --body "Update submodule $MODULE"
+        # auto merges PRs for submodules and patch updates; other PRs will need a final human pass
+        if: ${{steps.metadata.outputs.package-ecosystem == 'gitsubmodule' || steps.metadata.outputs.update-type == 'version-update:semver-patch'}}
+        run: gh pr merge --auto --rebase "$PR_URL"
         env:
           PR_URL: ${{github.event.pull_request.html_url}}
           MODULE: ${{steps.metadata.outputs.dependency-names}}
