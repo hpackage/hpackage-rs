@@ -2,6 +2,7 @@ name: Sync Submodules
 on:
   repository_dispatch:
     types: ["sync-schema"]
+  workflow_dispatch:
 
 permissions:
   contents: write
