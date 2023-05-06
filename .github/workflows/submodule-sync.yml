@@ -1,3 +1,4 @@
+name: Sync Submodules
 on:
   repository_dispatch:
     types: ["sync-schema"]
