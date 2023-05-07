@@ -30,11 +30,12 @@ pub enum ProcessingError {
 ///     parse_validate,
 ///     types::{
 ///         HollowKnightPackageDef,
-///         Asset,
+///         Link,
+///         ModlinksReference,
 ///         References,
 ///         ReferenceDef,
 ///         ReferenceVersion,
-///         ModlinksReference,
+///         ReleaseAssets,
 ///         StringVersion
 ///     }
 /// };
@@ -59,16 +60,14 @@ pub enum ProcessingError {
 ///             "RandoSettingsManager": "@latest",
 ///             "MoreLocations": "@latest"
 ///         },
-///         "assets": [
-///             "bin/Publish/TheRealJournalRando.zip"
-///         ]
+///         "releaseAssets": "bin/Publish/TheRealJournalRando.zip"
 ///     }
 /// "#).unwrap();
 /// let builder = HollowKnightPackageDef::builder()
-///     .name("TheRealJournalRando")
-///     .description("Randomizer 4 addon that adds the option to randomize all other Hunter's Journal entries.")
+///     .name("TheRealJournalRando".to_string())
+///     .description("Randomizer 4 addon that adds the option to randomize all other Hunter's Journal entries.".to_string())
 ///     .authors(vec!["BadMagic".to_string()])
-///     .repository("https://github.com/BadMagic100/TheRealJournalRando".to_string())
+///     .repository(Link::from("https://github.com/BadMagic100/TheRealJournalRando".to_string()))
 ///     .dependencies(References::from(HashMap::from([
 ///         ("ItemChanger".to_string(), ReferenceVersion::from(StringVersion("@modlinks".to_string())))
 ///     ])))
@@ -85,9 +84,7 @@ pub enum ProcessingError {
 ///         ("RandoSettingsManager".to_string(), ReferenceVersion::from(StringVersion("@latest".to_string()))),
 ///         ("MoreLocations".to_string(), ReferenceVersion::from(StringVersion("@latest".to_string())))
 ///     ])))
-///     .assets(Vec::from([
-///         Asset::UniversalAsset("bin/Publish/TheRealJournalRando.zip".to_string())
-///     ]));
+///     .release_assets(ReleaseAssets::UniversalAsset("bin/Publish/TheRealJournalRando.zip".to_string()));
 /// let expected = HollowKnightPackageDef::try_from(builder).unwrap();
 /// assert_eq!(
 ///     serde_json::to_value(result).unwrap(),
