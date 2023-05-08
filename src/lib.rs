@@ -28,16 +28,7 @@ pub enum ProcessingError {
 /// use std::collections::HashMap;
 /// use hpackage::{
 ///     parse_validate,
-///     types::{
-///         HollowKnightPackageDef,
-///         Link,
-///         ModlinksReference,
-///         References,
-///         ReferenceDef,
-///         ReferenceVersion,
-///         ReleaseAssets,
-///         StringVersion
-///     }
+///     types::*
 /// };
 ///
 /// let result = parse_validate(r#"
@@ -46,9 +37,9 @@ pub enum ProcessingError {
 ///         "description": "Randomizer 4 addon that adds the option to randomize all other Hunter's Journal entries.",
 ///         "authors": ["BadMagic"],
 ///         "repository": "https://github.com/BadMagic100/TheRealJournalRando",
-///         "dependencies": {
-///             "ItemChanger": "@modlinks"
-///         },
+///         "dependencies": [
+///             "ItemChanger"
+///         ],
 ///         "devDependencies": {
 ///             "Randomizer 4": {
 ///                 "ref": {
@@ -68,10 +59,8 @@ pub enum ProcessingError {
 ///     .description("Randomizer 4 addon that adds the option to randomize all other Hunter's Journal entries.".to_string())
 ///     .authors(vec!["BadMagic".to_string()])
 ///     .repository(Link::from("https://github.com/BadMagic100/TheRealJournalRando".to_string()))
-///     .dependencies(References::from(HashMap::from([
-///         ("ItemChanger".to_string(), ReferenceVersion::from(StringVersion("@modlinks".to_string())))
-///     ])))
-///     .dev_dependencies(References::from(HashMap::from([
+///     .dependencies(References::from(ArrayReferences::from(vec!["ItemChanger".to_string()])))
+///     .dev_dependencies(References::from(MappedReferences::from(HashMap::from([
 ///         ("Randomizer 4".to_string(), ReferenceVersion::from(ReferenceDef::try_from(
 ///             ReferenceDef::builder()
 ///                 .alternate_install_name("RandomizerMod".to_string())
@@ -83,7 +72,7 @@ pub enum ProcessingError {
 ///         ("ItemSync".to_string(), ReferenceVersion::from(StringVersion("@modlinks".to_string()))),
 ///         ("RandoSettingsManager".to_string(), ReferenceVersion::from(StringVersion("@latest".to_string()))),
 ///         ("MoreLocations".to_string(), ReferenceVersion::from(StringVersion("@latest".to_string())))
-///     ])))
+///     ]))))
 ///     .release_assets(ReleaseAssets::UniversalAsset("bin/Publish/TheRealJournalRando.zip".to_string()));
 /// let expected = HollowKnightPackageDef::try_from(builder).unwrap();
 /// assert_eq!(
@@ -105,9 +94,9 @@ pub enum ProcessingError {
 ///         "description": "Randomizer 4 addon that adds the option to randomize all other Hunter's Journal entries.",
 ///         "authors": ["BadMagic"],
 ///         "repository": "https://github.com/BadMagic100/TheRealJournalRando",
-///         "dependencies": {
-///             "ItemChanger": "@modlinks"
-///         },
+///         "dependencies": [
+///             "ItemChanger"
+///         ],
 ///         "devDependencies": {
 ///             "Randomizer 4": "@modlinks",
 ///             "ItemSync": "@modlinks",
