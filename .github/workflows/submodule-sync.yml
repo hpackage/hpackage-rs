@@ -11,6 +11,9 @@ permissions:
 jobs:
   sync:
     runs-on: ubuntu-latest
+    # runs in an environment with a wait timer so that if you want to update
+    # the schema and package at the same time you don't have to race the PR
+    environment: delayed-schema-sync
     steps:
       - uses: actions/checkout@v3
         with:
