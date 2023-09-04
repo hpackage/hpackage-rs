@@ -15,7 +15,7 @@ jobs:
     # the schema and package at the same time you don't have to race the PR
     environment: delayed-schema-sync
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: recursive
       - name: Update references
