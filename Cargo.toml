@@ -10,7 +10,7 @@ build = "src/build.rs"
 
 [dependencies]
 http = "1.0.0"
-jsonschema = "0.21.0"
+jsonschema = "0.22.3"
 serde = "1.0.160"
 serde_json = "1.0.96"
 
